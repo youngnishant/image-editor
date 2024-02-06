@@ -93,21 +93,20 @@ const Login = () => {
             <svg
               stroke="currentColor"
               fill="none"
-              stroke-width="2"
+              strokeWidth="2"
               viewBox="0 0 24 24"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              height="1em"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               style={{
                 color: "rgb(102, 112, 133)",
                 height: "26px",
                 width: "26px",
               }}
+              height="1em"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-              <polyline points="22,6 12,13 2,6"></polyline>
+              <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
             </svg>
             <div className="border-r-2 h-10"></div>
             <div className="flex flex-col w-full">
