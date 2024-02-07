@@ -5,8 +5,8 @@ const Login = () => {
     <main className="flex flex-col items-center justify-center pt-10 pb-20 px-4">
       <div className="flex flex-col justify-center items-center max-w-[346px] w-full">
         <div className="text-center">
-          <p className="font-semibold text-2xl">Sign Up</p>
-          <p className="text-lg text-gray-500">To edit amazing images!</p>
+          <p className="font-semibold text-2xl">Welcome to Image Editor</p>
+          <p className="text-lg text-gray-500">Log in to edit images!</p>
         </div>
         {/* glogin */}
         <div className="mt-5 w-full">
@@ -82,7 +82,7 @@ const Login = () => {
             <div className="flex flex-col w-full">
               <label className="font-semibold text-xs pb-1">E-mail*</label>
               <input
-                type="text"
+                type="email"
                 className="border-none outline-none bg-white"
                 placeholder="Enter your e-mail"
                 value=""
@@ -124,7 +124,7 @@ const Login = () => {
         <div className="mt-5">
           <button type="submit" className="rounded-full bg-orange-600">
             <div className="flex flex-row justify-center items-center gap-x-3 py-3 px-6">
-              <span className="text-md text-white pb-0.5">Sign Up</span>
+              <span className="text-md text-white pb-0.5">Submit</span>
               <svg
                 stroke="#fff"
                 fill="#fff"
@@ -141,14 +141,23 @@ const Login = () => {
           </button>
         </div>
         {/* redirection */}
-        <div className="flex mt-5 text-gray-700 text-md">
+        <div className="flex flex-col items-center justify-center gap-y-4 mt-5 text-gray-700 text-md">
           <p>
-            Already have an account?&nbsp;
+            Don&apos;t have an account?&nbsp;
             <Link
-              href="/login"
+              href="/register"
               className="text-orange-600 hover:text-orange-500"
             >
-              Log in.
+              Register.
+            </Link>
+          </p>
+          <p>
+            Forgot your password?&nbsp;
+            <Link
+              href="/register"
+              className="text-orange-600 hover:text-orange-500"
+            >
+              Reset Here.
             </Link>
           </p>
         </div>
