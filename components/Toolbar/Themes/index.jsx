@@ -1,10 +1,10 @@
 import themeConfig from "./config";
 
-const ThemesToolbar = ({ canvas }) => {
+const ThemesToolbar = ({ canvas, drawCanvas }) => {
   const handleOnFilterClick = (filterFunction) => {
+    drawCanvas();
     const context = canvas.getContext("2d", { willReadFrequently: true });
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-
     filterFunction(context, imageData);
   };
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const FileAction = ({ canvasRef, setImageSrc }) => {
+const FileAction = ({ canvasRef, setImageSrc, disabled }) => {
   const [isImagePresent, setImagePresent] = useState(false);
 
   const handleImageUpload = (e) => {
@@ -86,8 +86,9 @@ const FileAction = ({ canvasRef, setImageSrc }) => {
         )}
         <button
           type="button"
-          className="rounded-md cursor-pointer"
+          className={disabled ? "opacity-10" : "cursor-pointer"}
           onClick={handleDownload}
+          disabled={disabled}
         >
           <div className="flex flex-row justify-center items-center p-3">
             <svg

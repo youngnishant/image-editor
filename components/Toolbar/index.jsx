@@ -5,11 +5,16 @@ const Toolbar = ({
   canvas,
   lastActiveObjectId,
   handleOnNewAction,
+  drawCanvas,
   undo,
   isUndoDisabled,
+  disabled,
 }) => {
   return (
-    <div>
+    <div className="relative">
+      {disabled && (
+        <div className="h-full w-full bg-white opacity-60 absolute" />
+      )}
       <div className="flex justify-between items-center mt-5 mb-2">
         <p className="text-xl font-semibold px-1 text-orange-500 tracking-wider">
           Toolbar
@@ -46,7 +51,7 @@ const Toolbar = ({
           handleOnNewAction={handleOnNewAction}
         />
         <div className="mt-8">
-          <ThemesToolbar canvas={canvas} />
+          <ThemesToolbar canvas={canvas} drawCanvas={drawCanvas} />
         </div>
       </div>
     </div>
