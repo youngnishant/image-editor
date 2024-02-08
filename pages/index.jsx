@@ -85,7 +85,7 @@ const ImageEditor = () => {
       (action) => action.id === lastActiveObjectId
     );
 
-    if (lastActionObj.type === "text") {
+    if (lastActionObj?.type === "text") {
       const newData = changeActionObjectPosition(e.clientX, e.clientY);
       setActionObjects(newData);
       drawCanvas();
