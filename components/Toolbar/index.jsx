@@ -2,7 +2,6 @@ import ThemesToolbar from "@/components/Toolbar/Themes";
 import TextToolbar from "@/components/Toolbar/Text";
 
 const Toolbar = ({
-  canvas,
   lastActiveObjectId,
   handleOnNewAction,
   undo,
@@ -50,7 +49,6 @@ const Toolbar = ({
         />
         <div className="mt-8">
           <ThemesToolbar
-            canvas={canvas}
             lastActiveObjectId={lastActiveObjectId}
             handleOnNewAction={handleOnNewAction}
           />

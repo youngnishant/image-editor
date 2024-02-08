@@ -139,10 +139,8 @@ const ImageEditor = () => {
             disabled={!imageSrc}
           />
           <Toolbar
-            canvas={canvasRef.current}
             lastActiveObjectId={lastActiveObjectId}
             handleOnNewAction={handleOnNewAction}
-            drawCanvas={drawCanvas}
             undo={undo}
             isUndoDisabled={actionObjects.length === 0}
             disabled={!imageSrc}
