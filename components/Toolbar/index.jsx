@@ -5,7 +5,6 @@ const Toolbar = ({
   canvas,
   lastActiveObjectId,
   handleOnNewAction,
-  drawCanvas,
   undo,
   isUndoDisabled,
   disabled,
@@ -51,7 +50,11 @@ const Toolbar = ({
           handleOnNewAction={handleOnNewAction}
         />
         <div className="mt-8">
-          <ThemesToolbar canvas={canvas} drawCanvas={drawCanvas} />
+          <ThemesToolbar
+            canvas={canvas}
+            lastActiveObjectId={lastActiveObjectId}
+            handleOnNewAction={handleOnNewAction}
+          />
         </div>
       </div>
     </div>

@@ -57,14 +57,28 @@ const ImageEditor = () => {
   };
 
   const handleObjectDrag = (e) => {
-    const newData = changeActionObjectPosition(e.clientX, e.clientY);
-    setActionObjects(newData);
-    drawCanvas();
+    const lastActionObj = actionObjects.find(
+      (action) => action.id === lastActiveObjectId
+    );
+
+    if (lastActionObj.type === "text") {
+      const newData = changeActionObjectPosition(e.clientX, e.clientY);
+      setActionObjects(newData);
+      drawCanvas();
+    }
   };
 
   const handleOnNewAction = (id, newActionObj) => {
+    if (newActionObj.type === "theme") {
+      const updatedActionObj = actionObjects.filter(
+        (action) => action.type !== "theme"
+      );
+      setActionObjects(() => [...updatedActionObj, newActionObj]);
+    } else {
+      setActionObjects((prevState) => [...prevState, newActionObj]);
+    }
+
     setLastActiveObjectId(id);
-    setActionObjects((prevState) => [...prevState, newActionObj]);
   };
 
   const reset = () => {

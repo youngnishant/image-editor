@@ -1,11 +1,21 @@
 import themeConfig from "./config";
 
-const ThemesToolbar = ({ canvas, drawCanvas }) => {
-  const handleOnFilterClick = (filterFunction) => {
-    drawCanvas();
+const ThemesToolbar = ({ canvas, handleOnNewAction, lastActiveObjectId }) => {
+  const handleOnFilterClick = (filterFunction, themeName) => {
     const context = canvas.getContext("2d", { willReadFrequently: true });
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-    filterFunction(context, imageData);
+
+    const themeActionObj = {
+      id: lastActiveObjectId + 1,
+      type: "theme",
+      themeName,
+    };
+
+    handleOnNewAction(themeActionObj.id, themeActionObj);
+
+    setTimeout(() => {
+      filterFunction(context, imageData);
+    }, 500);
   };
 
   return (
@@ -16,7 +26,9 @@ const ThemesToolbar = ({ canvas, drawCanvas }) => {
           <button
             key={theme.value}
             type="button"
-            onClick={() => handleOnFilterClick(theme.filterFunction)}
+            onClick={() =>
+              handleOnFilterClick(theme.filterFunction, theme.value)
+            }
             className="border rounded-md px-2 py-1"
           >
             {theme.label}
