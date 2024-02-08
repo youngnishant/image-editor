@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 
-const Text = ({ canvas, lastActiveObjectId, handleOnNewAction }) => {
+const Text = ({ lastActiveObjectId, handleOnNewAction }) => {
   const [textColor, setTextColor] = useState("#000000");
   const [fontSize, setFontSize] = useState(18);
 
@@ -29,12 +29,6 @@ const Text = ({ canvas, lastActiveObjectId, handleOnNewAction }) => {
         type: "text",
       };
 
-      const context = canvas.getContext("2d");
-
-      context.font = `${fontSize}px`;
-      context.fillStyle = textColor;
-      context.fillText(textObj.text, textObj.x, textObj.y);
-
       handleOnNewAction(textObj.id, textObj);
 
       setTextColor("#000000");
@@ -44,20 +38,17 @@ const Text = ({ canvas, lastActiveObjectId, handleOnNewAction }) => {
   return (
     <div>
       <div className="flex flex-col justify-center items-start">
-        <label htmlFor="textInput" className="text-sm text-gray-600">
-          Enter Text:
-        </label>
-        <div className="flex w-full">
+        <div className="flex w-full mt-2">
           <input
             type="text"
-            id="textInput"
             ref={textRef}
-            className="w-3/4 outline-none border-b"
+            placeholder="Enter Some Text"
+            className="w-3/4 outline-none bg-orange-50 rounded-md px-2 py-3 text-xs"
           />
           <button
             type="button"
             onClick={handleAddText}
-            className="w-1/4 bg-gray-600 text-white text-xs font-semibold px-3 py-1 ml-1 rounded-sm"
+            className="w-1/4 bg-orange-400 text-white text-md font-bold px-3 py-1 ml-1 rounded-sm"
           >
             Add
           </button>

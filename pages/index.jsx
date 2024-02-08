@@ -32,7 +32,8 @@ const ImageEditor = () => {
     }
 
     actionObjects.forEach((textObj) => {
-      context.font = `${textObj.fontSize}px`;
+      context.font = `${textObj.fontSize}px Arial`;
+
       context.fillStyle = textObj.color;
       context.fillText(textObj.text, textObj.x, textObj.y);
     });

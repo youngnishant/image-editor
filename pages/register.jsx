@@ -1,6 +1,34 @@
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 const Login = () => {
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const userSignUp = async (data) => {
+    const userPayload = {
+      email: data.email,
+      userId: data.email.slice(0, 4) + Date.now(), // temp sol to generate user id for demo
+    };
+
+    localStorage.setItem("user", JSON.stringify(userPayload));
+
+    setTimeout(() => {
+      router.push("/");
+    }, 500);
+  };
+
   return (
     <main className="flex flex-col items-center justify-center pt-10 pb-20 px-4">
       <div className="flex flex-col justify-center items-center max-w-[346px] w-full">
@@ -14,12 +42,12 @@ const Login = () => {
             <svg
               stroke="currentColor"
               fill="currentColor"
-              stroke-width="0"
+              strokeWidth="0"
               version="1.1"
               x="0px"
               y="0px"
               viewBox="0 0 48 48"
-              enable-background="new 0 0 48 48"
+              enableBackground="new 0 0 48 48"
               height="24"
               width="24"
               xmlns="http://www.w3.org/2000/svg"
@@ -62,10 +90,10 @@ const Login = () => {
             <svg
               stroke="currentColor"
               fill="none"
-              stroke-width="2"
+              strokeWidth="2"
               viewBox="0 0 24 24"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               height="1em"
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
@@ -85,8 +113,19 @@ const Login = () => {
                 type="text"
                 className="border-none outline-none bg-white"
                 placeholder="Enter your e-mail"
-                value=""
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    message: "Invalid email address",
+                  },
+                })}
               />
+              {errors?.email && (
+                <p className="text-rose-700 text-xs mt-1">
+                  {errors?.email?.message}
+                </p>
+              )}
             </div>
           </div>
           <div className="flex justify-between items-center w-full gap-x-2 border border-gray-300 rounded-md px-6 py-3">
@@ -115,20 +154,36 @@ const Login = () => {
                 type="password"
                 className="border-none outline-none bg-white"
                 placeholder="Enter your password"
-                value=""
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be at least 8 characters",
+                  },
+                })}
               />
+              {errors?.password && (
+                <p className="text-rose-700 text-xs mt-1">
+                  {errors?.password?.message}
+                </p>
+              )}
             </div>
           </div>
         </div>
         {/* submit */}
         <div className="mt-5">
-          <button type="submit" className="rounded-full bg-orange-600">
+          <button
+            type="submit"
+            className="rounded-full bg-orange-600"
+            onClick={handleSubmit(userSignUp)}
+            disabled={isSubmitting}
+          >
             <div className="flex flex-row justify-center items-center gap-x-3 py-3 px-6">
               <span className="text-md text-white pb-0.5">Sign Up</span>
               <svg
                 stroke="#fff"
                 fill="#fff"
-                stroke-width="0"
+                strokeWidth="0"
                 viewBox="0 0 512 512"
                 className=""
                 height="24px"
