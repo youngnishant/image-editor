@@ -11,6 +11,7 @@ const ImageEditor = () => {
   const [imageSrc, setImageSrc] = useState(null);
   const [actionObjects, setActionObjects] = useState([]);
   const [lastActiveObjectId, setLastActiveObjectId] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   const undo = () => {
     if (lastActiveObjectId > 0) {
@@ -23,6 +24,28 @@ const ImageEditor = () => {
     }
   };
 
+  const applyTextAction = (context, actionObj) => {
+    context.font = `${actionObj.fontSize}px Arial`;
+
+    context.fillStyle = actionObj.color;
+    context.fillText(actionObj.text, actionObj.x, actionObj.y);
+  };
+
+  const applyThemeFilter = () => {
+    const themeActionObj = actionObjects.find(
+      (actionObj) => actionObj.type === "theme"
+    );
+    if (themeActionObj) {
+      const canvas = canvasRef.current;
+      const context = canvas.getContext("2d");
+
+      // applying filter in last to add other change first
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+
+      themeActionObj.filterFunction(context, imageData);
+    }
+  };
+
   const drawCanvas = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
@@ -31,11 +54,10 @@ const ImageEditor = () => {
       context.drawImage(imageSrc, 0, 0);
     }
 
-    actionObjects.forEach((textObj) => {
-      context.font = `${textObj.fontSize}px Arial`;
-
-      context.fillStyle = textObj.color;
-      context.fillText(textObj.text, textObj.x, textObj.y);
+    actionObjects.forEach((actionObj) => {
+      if (actionObj.type === "text") {
+        applyTextAction(context, actionObj);
+      }
     });
   };
 
@@ -58,6 +80,7 @@ const ImageEditor = () => {
   };
 
   const handleObjectDrag = (e) => {
+    if (!isDragging) return;
     const lastActionObj = actionObjects.find(
       (action) => action.id === lastActiveObjectId
     );
@@ -82,6 +105,14 @@ const ImageEditor = () => {
     setLastActiveObjectId(id);
   };
 
+  const handleDragStart = (e) => {
+    setIsDragging(true);
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+  };
+
   const reset = () => {
     setActionObjects([]);
     setLastActiveObjectId(0);
@@ -89,7 +120,8 @@ const ImageEditor = () => {
 
   useEffect(() => {
     drawCanvas();
-  }, [lastActiveObjectId]);
+    applyThemeFilter();
+  }, [lastActiveObjectId, isDragging]);
 
   useEffect(() => {
     reset();
@@ -118,9 +150,9 @@ const ImageEditor = () => {
         </div>
         <Canvas
           ref={canvasRef}
-          handleDrag={handleObjectDrag}
-          actionObjects={actionObjects}
-          lastActiveObjectId={lastActiveObjectId}
+          handleOnDrag={handleObjectDrag}
+          handleDragEnd={handleDragEnd}
+          handleDragStart={handleDragStart}
         />
       </div>
     </div>
